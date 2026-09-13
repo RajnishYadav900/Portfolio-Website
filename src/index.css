@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .bg-grid-dark {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .orange-glow {
+    box-shadow: 0 0 35px -5px rgba(255, 75, 31, 0.35);
+  }
+  .orange-glow-sm {
+    box-shadow: 0 0 15px -3px rgba(255, 75, 31, 0.25);
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4B1F;
+}
