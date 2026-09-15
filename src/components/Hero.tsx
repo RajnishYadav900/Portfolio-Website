@@ -79,10 +79,10 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section id="home" className="relative pt-4 sm:pt-6 pb-14 sm:pb-24 overflow-hidden">
+    <section id="home" className="relative pt-6 sm:pt-10 pb-16 sm:pb-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+
           {/* Left Column: Text & CTAs */}
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left z-10 w-full">
             {/* Small Label with Status Indicator */}
@@ -129,25 +129,25 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Supporting Text */}
-            <p className="text-sm sm:text-base md:text-lg text-zinc-600 max-w-xl lg:max-w-2xl leading-relaxed mb-6 sm:mb-8 text-center lg:text-left mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base md:text-lg text-zinc-600 max-w-xl lg:max-w-2xl leading-relaxed mb-7 sm:mb-9 text-center lg:text-left mx-auto lg:mx-0">
               {PERSONAL_INFO.shortPositioning}
             </p>
 
             {/* Two Call To Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-7 sm:mb-10 w-full max-w-xs sm:max-w-none mx-auto lg:mx-0">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-8 sm:mb-12 w-full max-w-xs sm:max-w-none mx-auto lg:mx-0">
               <a
                 href="#projects"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-zinc-950 text-white font-semibold text-sm sm:text-base hover:bg-[#FF4B1F] transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-orange-500/25 group text-center"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-9 py-4 sm:py-4.5 rounded-full bg-zinc-950 text-white font-bold text-base sm:text-lg hover:bg-[#FF4B1F] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 group text-center"
               >
                 <span>View My Work</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
               </a>
 
               <a
                 href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 rounded-full bg-white text-zinc-900 border border-zinc-300 font-semibold text-sm sm:text-base hover:border-zinc-950 hover:bg-zinc-50 transition-all duration-200 shadow-2xs text-center"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 sm:px-9 py-4 sm:py-4.5 rounded-full bg-white text-zinc-900 border-2 border-zinc-300 font-bold text-base sm:text-lg hover:border-zinc-950 hover:bg-zinc-50 hover:-translate-y-0.5 transition-all duration-200 shadow-sm text-center"
               >
-                <Send className="w-4 h-4 text-[#FF4B1F]" />
+                <Send className="w-5 h-5 text-[#FF4B1F]" />
                 <span>Contact Me</span>
               </a>
             </div>
@@ -221,17 +221,17 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Right Column: Profile Image Area with Orange Shape & Floating Badges */}
-          <div className="lg:col-span-5 relative flex justify-center items-center w-full mt-4 lg:mt-0">
-            
+          <div className="lg:col-span-5 relative flex justify-center items-center w-full mt-6 lg:mt-0 pt-6 pb-6 lg:pt-8 lg:pb-8">
+
             {/* Background Orange Graphic Elements */}
             <div className="absolute w-64 xs:w-72 sm:w-88 h-64 xs:h-72 sm:h-88 bg-gradient-to-tr from-[#FF4B1F] to-[#FF7A00] rounded-full filter blur-2xl opacity-20 -z-10 animate-pulse pointer-events-none"></div>
 
             {/* Profile Frame Container */}
-            <div className="relative w-full max-w-[290px] min-[380px]:max-w-[330px] sm:max-w-md mx-auto">
-              
+            <div className="relative w-full max-w-[280px] min-[380px]:max-w-[320px] sm:max-w-sm mx-auto">
+
               {/* Outer Framed Card */}
               <div className="relative rounded-3xl bg-gradient-to-b from-zinc-900 via-zinc-950 to-black p-3 sm:p-3.5 shadow-2xl border border-zinc-800">
-                
+
                 {/* Main Profile Canvas / Image Holder */}
                 <div
                   onDragOver={handleDragOver}
@@ -241,15 +241,16 @@ export const Hero: React.FC = () => {
                     isDragging ? 'border-[#FF4B1F] ring-4 ring-[#FF4B1F]/40' : 'border-zinc-700/50'
                   }`}
                 >
-                  
+
                   {/* Decorative Geometric Orange Arch behind profile */}
                   <div className="absolute inset-x-6 sm:inset-x-8 top-10 sm:top-12 bottom-0 bg-gradient-to-b from-[#FF4B1F] via-[#FF6036] to-transparent opacity-90 rounded-t-full -z-0"></div>
 
-                  {/* Profile Portrait */}
+                  {/* Profile Portrait — background subtly darkened/blurred so the face pops */}
                   <img
                     src={photoSrc}
                     alt="Rajnish Kumar Yadav"
                     className="w-full h-full object-cover object-top relative z-10 transition-transform duration-500 hover:scale-105"
+                    style={{ filter: 'contrast(1.05) saturate(1.05)' }}
                     referrerPolicy="no-referrer"
                     onError={() => {
                       if (photoSrc !== defaultProfilePhoto) {
@@ -262,6 +263,15 @@ export const Hero: React.FC = () => {
                       }
                     }}
                   />
+
+                  {/* Subtle vignette to pull focus toward the face and mute the room background */}
+                  <div
+                    className="absolute inset-0 z-[11] pointer-events-none"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 50% 35%, transparent 35%, rgba(0,0,0,0.35) 100%)',
+                    }}
+                  ></div>
 
                   {/* Drag-and-drop active overlay */}
                   {isDragging && (
@@ -291,8 +301,8 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* FLOATING BADGE 1: React (Top Left) */}
-              <div className="absolute -top-3 left-0 sm:-top-4 sm:-left-6 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
+              {/* FLOATING BADGE 1: React (Top Left) — pulled inward so it never clips off-frame */}
+              <div className="absolute -top-3 left-2 sm:-top-4 sm:left-1 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600 shrink-0">
                   <Code2 className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
@@ -302,8 +312,8 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* FLOATING BADGE 2: Node.js (Top Right) */}
-              <div className="absolute top-8 right-0 sm:top-12 sm:-right-8 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
+              {/* FLOATING BADGE 2: Node.js (Top Right) — pulled inward */}
+              <div className="absolute top-8 right-2 sm:top-10 sm:right-1 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
                   <Layers className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
@@ -313,8 +323,8 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* FLOATING BADGE 3: Python (Bottom Left) */}
-              <div className="absolute bottom-20 left-0 sm:-left-8 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
+              {/* FLOATING BADGE 3: Python (Bottom Left) — pulled inward */}
+              <div className="absolute bottom-24 left-2 sm:bottom-28 sm:left-1 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
                   <Terminal className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
@@ -324,8 +334,8 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* FLOATING BADGE 4: AI & Data (Bottom Right) */}
-              <div className="absolute -bottom-3 right-0 sm:-bottom-4 sm:-right-6 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
+              {/* FLOATING BADGE 4: AI & Data (Bottom Right) — pulled inward */}
+              <div className="absolute -bottom-3 right-2 sm:-bottom-4 sm:right-1 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 shadow-lg sm:shadow-xl border border-zinc-200/80 flex items-center gap-1.5 sm:gap-2 transform hover:-translate-y-1 transition-transform duration-200 z-30">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF4B1F] shrink-0">
                   <Database className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>

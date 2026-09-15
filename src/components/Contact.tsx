@@ -381,7 +381,7 @@ export const Contact: React.FC = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="e.g. Alex Morgan"
+                        placeholder="e.g. Krish Yadav"
                         className={`w-full px-4 py-3 rounded-xl border text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B1F] transition-all ${
                           errors.name ? 'border-red-500 bg-red-50/30' : 'border-zinc-200 bg-zinc-50/50 hover:bg-white'
                         }`}
@@ -399,7 +399,7 @@ export const Contact: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="e.g. alex@example.com"
+                        placeholder="e.g. abc@gmail.com"
                         className={`w-full px-4 py-3 rounded-xl border text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B1F] transition-all ${
                           errors.email ? 'border-red-500 bg-red-50/30' : 'border-zinc-200 bg-zinc-50/50 hover:bg-white'
                         }`}
