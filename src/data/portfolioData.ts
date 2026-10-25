@@ -16,7 +16,7 @@ export const PERSONAL_INFO = {
   education: 'BIT (Hons) @ Lincoln Int’l College | +2 Computer Science @ Dhanusha Science Campus',
   tagline: 'Design. Develop. Learn. Build.',
   shortPositioning: 'I build modern web experiences and technology solutions focused on solving real-world problems.',
-  detailedBio: 'I am a passionate Web Developer and aspiring AI/Data Engineer based in Kathmandu, Nepal. With foundational roots in Computer Science from Dhanusha Science Campus in Janakpurdham and currently pursuing a Bachelor of Information Technology (BIT) Hons at Lincoln Int’l College, I specialize in crafting performant user interfaces, resilient backends, and practical data-driven systems. Driven by curiosity and a relentless learning mindset, I aim to merge high-caliber software engineering with intelligent data architectures to create meaningful real-world impact.',
+  detailedBio: 'I am a passionate Web Developer and aspiring AI/Data Engineer based in Kathmandu, Nepal. With foundational roots in Computer Science and currently pursuing a Bachelor of Information Technology (BIT) Hons at Lincoln Int’l College, I specialize in crafting performant user interfaces, resilient backends, and practical data-driven systems. Driven by curiosity and a relentless learning mindset, I aim to merge high-caliber software engineering with intelligent data architectures to create meaningful real-world impact.',
   email: 'rajnishyadav123jnk@gmail.com',
   whatsappNumber: '+977 9713563268',
   whatsappUrl: 'https://wa.me/9779713563268',
@@ -159,7 +159,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'ui-dev',
     number: '03',
-    title: 'UI Development & Design Systems',
+    title: 'UI Development & System Design',
     shortDescription: 'Translating design specifications into sleek, high-contrast, accessible user interface components.',
     detailedDescription: 'Transforming wireframes and design inspirations into living code with fluid micro-interactions, mathematical typography hierarchy, strict contrast adherence, and reusable component libraries.',
     technologies: ['Tailwind CSS', 'Motion/Animations', 'Lucide Icons', 'Modern CSS Layouts'],

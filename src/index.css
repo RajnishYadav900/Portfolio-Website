@@ -1,37 +1,144 @@
 @import "tailwindcss";
 
+/* ===== Theme variables (DEFAULT = LIGHT) ===== */
+:root {
+  color-scheme: light;
+  --page-bg: #F5F7FA;
+  --card-bg: #FFFFFF;
+  --text-color: #18181B;
+  --border-color: #E4E4E7;
+  --grid-dot: rgba(0, 0, 0, 0.08);
+  --scroll-track: #F1F1F1;
+  --scroll-thumb: #D4D4D8;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #0E1015;
+  --card-bg: #171A21;
+  --text-color: #F4F4F5;
+  --border-color: #2D313A;
+  --grid-dot: rgba(255, 255, 255, 0.1);
+  --scroll-track: #171A21;
+  --scroll-thumb: #3F3F46;
+}
+
+/* Background grid */
 @layer utilities {
   .bg-grid-pattern {
-    background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-image: radial-gradient(
+      var(--grid-dot) 1px,
+      transparent 1px
+    );
     background-size: 24px 24px;
   }
+
   .bg-grid-dark {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
     background-size: 24px 24px;
   }
+
   .orange-glow {
     box-shadow: 0 0 35px -5px rgba(255, 75, 31, 0.35);
   }
+
   .orange-glow-sm {
     box-shadow: 0 0 15px -3px rgba(255, 75, 31, 0.25);
   }
 }
 
-/* Custom smooth scrollbar */
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
+  background: var(--scroll-thumb);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #FF4B1F;
+}
+
+/* =====================================================
+   DARK MODE: About, Services, Projects, Experience,
+   Achievements, Contact
+   ===================================================== */
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact) {
+  --dm-text-strong: #ffffffdb;
+  --dm-text: #e4e4e7;
+  --dm-text-muted: #f1f1f6;
+  --dm-card: #1c212c;
+  --dm-soft: rgba(255, 255, 255, 0.06);
+  --dm-border: #3f3f46;
+}
+
+/* Text */
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.text-zinc-950, .text-zinc-900, .text-black, .text-slate-900) {
+  color: var(--dm-text-strong);
+}
+
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.text-zinc-800, .text-zinc-700, .text-zinc-600, .text-slate-700, .text-slate-600) {
+  color: var(--dm-text);
+}
+
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.text-zinc-500, .text-zinc-400, .text-slate-500) {
+  color: var(--dm-text-muted);
+}
+
+/* Backgrounds */
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.bg-white, .bg-slate-50) {
+  background-color: var(--dm-card);
+}
+
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.bg-zinc-50, .bg-zinc-100, .bg-slate-100, .bg-zinc-50\/50) {
+  background-color: var(--dm-soft);
+}
+
+/* Borders */
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.border-zinc-100, .border-zinc-200, .border-zinc-200\/80, .border-zinc-200\/90, .border-slate-200) {
+  border-color: var(--dm-border);
+}
+
+/* Contact form inputs */
+[data-theme='dark'] #contact :is(input, textarea, select) {
+  background-color: var(--dm-soft);
+  color: var(--dm-text-strong);
+  border-color: var(--dm-border);
+}
+
+[data-theme='dark'] #contact :is(input, textarea)::placeholder {
+  color: var(--dm-text-muted);
+}
+
+/* Exception: white floating icon buttons (e.g. certificate "eye" button) */
+[data-theme='dark'] :is(#about, #services, #projects, #experience, #achievements, #contact)
+  :is(.bg-white\/90, .bg-white\/80) {
+  color: #18181b;
 }

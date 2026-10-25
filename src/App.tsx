@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TrustStrip } from './components/TrustStrip';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
+import {Skills} from './components/Skills';
 import { Services } from './components/Services';
 import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
@@ -11,8 +12,47 @@ import { Achievements } from './components/Achievements';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
+type Theme = 'dark' | 'light';
+
+const THEME_KEY = 'rajnish_portfolio_theme';
+
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('home');
+
+
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      return localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // Continue even if browser storage is unavailable.
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const next = document.documentElement.dataset.theme;
+      if (next === 'dark' || next === 'light') {
+        setTheme(next);
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const sections = [
@@ -31,34 +71,35 @@ export default function App() {
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const sectionEl = document.getElementById(sections[i]);
-        if (sectionEl) {
-          const top = sectionEl.offsetTop;
-          if (scrollPosition >= top) {
-            setActiveSection(sections[i]);
-            break;
-          }
+
+        if (sectionEl && scrollPosition >= sectionEl.offsetTop) {
+          setActiveSection(sections[i]);
+          break;
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isDark = theme === 'dark';
+
   return (
-    <div className="min-h-screen bg-[#0E1015] text-zinc-900 p-0 sm:p-3 md:p-6 lg:p-8 flex flex-col items-center justify-start antialiased selection:bg-[#FF4B1F] selection:text-white">
+    <div
+      className={`portfolio-app min-h-screen w-full flex flex-col antialiased ${
+        isDark ? 'bg-[#151922] text-white' : 'bg-white text-zinc-900'
+      }`}
+    >
+      {/* Full-width page */}
+      <div className="portfolio-frame relative flex w-full flex-1 flex-col">
+        <div className="pointer-events-none absolute inset-0 -z-0 bg-grid-pattern opacity-50" />
 
-      {/* Outer Grand Framed Container */}
-      <div className="w-full max-w-7xl mx-auto rounded-none sm:rounded-[2.5rem] bg-white border-0 sm:border border-zinc-200/90 shadow-2xl shadow-black/30 flex flex-col relative">
-
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50 -z-0" />
-
-        {/* Top Floating Navigation */}
         <Navbar activeSection={activeSection} />
 
-        {/* Main Content Sections */}
-        <main className="flex-1 w-full relative z-10">
+        <main className="relative z-10 w-full flex-1">
           <Hero />
           <TrustStrip />
           <About />
@@ -71,9 +112,7 @@ export default function App() {
         </main>
 
         <Footer />
-
       </div>
-
     </div>
   );
 }

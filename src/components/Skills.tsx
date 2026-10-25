@@ -1,145 +1,229 @@
-import React, { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import {
-  Code,
-  Layers,
-  Terminal,
+  BarChart3,
+  Binary,
+  Braces,
+  Code2,
+  Coffee,
   Database,
-  Wrench,
+  Eraser,
+  FileSpreadsheet,
+  GitBranch,
+  GitPullRequest,
+  Globe,
+  Layers,
+  MonitorSmartphone,
+  Package,
+  Palette,
+  PieChart,
   Sparkles,
-  CheckCircle,
-  Cpu,
-  Boxes,
-  Zap,
+  Terminal,
+  TrendingUp,
+  Wrench,
 } from 'lucide-react';
-import { SKILLS_DATA } from '../data/portfolioData';
-import { SkillItem } from '../types';
 
-type CategoryFilter = 'All' | 'Frontend' | 'Backend' | 'Programming' | 'AI & Data' | 'Tools';
-
-const categoryIcons: Record<string, React.ReactNode> = {
-  Frontend: <Code className="w-4 h-4 text-cyan-500" />,
-  Backend: <Layers className="w-4 h-4 text-emerald-500" />,
-  Programming: <Terminal className="w-4 h-4 text-blue-500" />,
-  'AI & Data': <Database className="w-4 h-4 text-[#FF4B1F]" />,
-  Tools: <Wrench className="w-4 h-4 text-purple-500" />,
+type Skill = {
+  name: string;
+  description: string;
+  icon: LucideIcon; // fallback icon
+  logo?: string;
+  invertInDark?: boolean;
 };
 
-export const Skills: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('All');
+type Category = {
+  id: string;
+  title: string;
+  icon: LucideIcon;
+  skills: Skill[];
+};
 
-  const categories: CategoryFilter[] = ['All', 'Frontend', 'Backend', 'Programming', 'AI & Data', 'Tools'];
+const dev = (path: string) =>
+  `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${path}.svg`;
 
-  const filteredSkills = selectedCategory === 'All'
-    ? SKILLS_DATA
-    : SKILLS_DATA.filter((s) => s.category === selectedCategory);
+const categories: Category[] = [
+  {
+    id: 'frontend',
+    title: 'Frontend Development',
+    icon: Code2,
+    skills: [
+      { name: 'HTML5', description: 'Semantic page structure', icon: Globe, logo: dev('html5/html5-original') },
+      { name: 'CSS3', description: 'Modern styling & layouts', icon: Palette, logo: dev('css3/css3-original') },
+      { name: 'JavaScript', description: 'Dynamic web behavior', icon: Braces, logo: dev('javascript/javascript-original') },
+      { name: 'React.js', description: 'Component-based UIs', icon: Layers, logo: dev('react/react-original') },
+      { name: 'Tailwind CSS', description: 'Utility-first styling', icon: Sparkles, logo: dev('tailwindcss/tailwindcss-original') },
+      { name: 'Responsive Design', description: 'Responsive Web Design', icon: MonitorSmartphone },
+    ],
+  },
+  {
+    id: 'programming',
+    title: 'Programming',
+    icon: Terminal,
+    skills: [
+      { name: 'Python', description: 'Scripting & problem solving', icon: Terminal, logo: dev('python/python-original') },
+      { name: 'C', description: 'Programming fundamentals', icon: Code2, logo: dev('c/c-original') },
+      { name: 'Java', description: 'Object-oriented programming', icon: Coffee, logo: dev('java/java-original') },
+      { name: 'DSA', description: 'Data Structures & Algorithms', icon: Binary },
+    ],
+  },
+  {
+    id: 'data-analytics',
+    title: 'Data Analytics',
+    icon: BarChart3,
+    skills: [
+      { name: 'Excel', description: 'Microsoft Excel: spreadsheets & formulas', icon: FileSpreadsheet },
+      { name: 'SQL', description: 'Querying databases', icon: Database },
+      { name: 'Power BI', description: 'Interactive dashboards', icon: BarChart3 },
+      { name: 'Data Cleaning', description: 'Preparing reliable data', icon: Eraser },
+      { name: 'Data Analysis', description: 'Finding patterns & insights', icon: TrendingUp },
+      { name: 'Data Visualization', description: 'Charts that tell stories', icon: PieChart },
+    ],
+  },
+  {
+    id: 'tools',
+    title: 'Tools & Technologies',
+    icon: Wrench,
+    skills: [
+      { name: 'Git', description: 'Version control', icon: GitBranch, logo: dev('git/git-original') },
+      { name: 'GitHub', description: 'Code hosting & collaboration', icon: GitPullRequest, logo: dev('github/github-original'), invertInDark: true },
+      { name: 'VS Code', description: 'Visual Studio Code editor', icon: Code2, logo: dev('vscode/vscode-original') },
+      { name: 'npm', description: 'Package management', icon: Package, logo: dev('npm/npm-original-wordmark') },
+    ],
+  },
+];
+
+/* Fade-in when scrolled into view */
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, visible };
+}
+
+function SkillCard({ skill }: { skill: Skill }) {
+  const [logoFailed, setLogoFailed] = useState(false);
+  const Icon = skill.icon;
+  const showLogo = skill.logo && !logoFailed;
 
   return (
-    <section id="skills" className="py-16 sm:py-24 bg-zinc-50/70 border-y border-zinc-200/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-zinc-200 text-xs sm:text-sm font-semibold text-zinc-800 mb-3 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#FF4B1F]"></span>
-              <span>Capabilities & Toolkit</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-zinc-950">
-              Technical <span className="text-[#FF4B1F]">Proficiency.</span>
-            </h2>
-            <p className="text-sm sm:text-base text-zinc-600 mt-2 max-w-xl">
-              A curated overview of modern frameworks, programming languages, backend systems, and data engineering concepts I leverage daily.
-            </p>
-          </div>
+    <div
+      title={skill.description}
+      className="group flex h-full min-h-[52px] items-center gap-2.5 rounded-xl border border-zinc-200 bg-white px-2.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#e8431f]/60 hover:shadow-md hover:shadow-[#e8431f]/10 motion-reduce:transition-none motion-reduce:hover:translate-y-0 [[data-theme=dark]_&]:border-white/10 [[data-theme=dark]_&]:bg-white/5 [[data-theme=dark]_&]:hover:border-[#e8431f]/70"
+    >
+      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-zinc-100 [[data-theme=dark]_&]:bg-white/10">
+        {showLogo ? (
+          <img
+            src={skill.logo}
+            alt={`${skill.name} logo`}
+            width={20}
+            height={20}
+            loading="lazy"
+            onError={() => setLogoFailed(true)}
+            className={`h-5 w-5 object-contain ${
+              skill.invertInDark ? '[[data-theme=dark]_&]:invert' : ''
+            }`}
+          />
+        ) : (
+          <Icon className="h-4 w-4 text-[#e8431f]" aria-label={skill.name} />
+        )}
+      </span>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 flex-wrap bg-white p-1.5 rounded-2xl border border-zinc-200 shadow-2xs">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
-                  selectedCategory === cat
-                    ? 'bg-zinc-950 text-white shadow-xs'
-                    : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+      <span className="min-w-0 break-words text-xs font-semibold leading-tight text-zinc-800 sm:text-sm [[data-theme=dark]_&]:text-zinc-100">
+        {skill.name}
+      </span>
+    </div>
+  );
+}
+
+function CategoryPanel({
+  category,
+  index,
+}: {
+  category: Category;
+  index: number;
+}) {
+  const { ref, visible } = useReveal<HTMLDivElement>();
+  const HeadingIcon = category.icon;
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${index * 80}ms` }}
+      className={`rounded-2xl border border-zinc-200 bg-zinc-50/60 p-4 transition-all duration-500 motion-reduce:transition-none [[data-theme=dark]_&]:border-white/10 [[data-theme=dark]_&]:bg-white/[0.03] ${
+        visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+      }`}
+    >
+      <div className="mb-3 flex items-center gap-2.5">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e8431f] text-white">
+          <HeadingIcon className="h-4 w-4" aria-hidden="true" />
+        </span>
+        <h3 className="text-base font-bold text-zinc-900 sm:text-lg [[data-theme=dark]_&]:text-white">
+          {category.title}
+        </h3>
+      </div>
+
+      <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+        {category.skills.map((skill) => (
+          <li key={skill.name}>
+            <SkillCard skill={skill} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function Skills() {
+  return (
+    <section
+      id="skills"
+      aria-labelledby="skills-heading"
+      className="relative px-4 py-12 sm:px-6 sm:py-16 lg:px-8"
+    >
+      <div className="mx-auto max-w-6xl">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <h2
+            id="skills-heading"
+            className="text-3xl font-extrabold text-[#e8431f] sm:text-4xl"
+          >
+            Skills &amp; Technologies
+          </h2>
+          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#e8431f]" />
+          <p className="mt-4 text-sm text-zinc-600 sm:text-base [[data-theme=dark]_&]:text-zinc-400">
+            Technologies I use to build modern interfaces, solve programming
+            problems, and transform data into meaningful insights.
+          </p>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredSkills.map((skill) => (
-            <div
-              key={skill.name}
-              className={`group relative p-5 rounded-2xl bg-white border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                skill.highlight
-                  ? 'border-zinc-300 shadow-xs hover:border-[#FF4B1F]/60 hover:shadow-orange-500/10'
-                  : 'border-zinc-200/80 shadow-2xs hover:border-zinc-300'
-              }`}
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-zinc-100 group-hover:bg-zinc-950 group-hover:text-white text-zinc-800 flex items-center justify-center transition-colors duration-300 border border-zinc-200/80 group-hover:border-zinc-950">
-                  {categoryIcons[skill.category] || <Boxes className="w-4 h-4 text-[#FF4B1F]" />}
-                </div>
-
-                <span
-                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${
-                    skill.level === 'Advanced'
-                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                      : skill.level === 'Proficient'
-                      ? 'bg-blue-50 text-blue-700 border-blue-200'
-                      : 'bg-zinc-100 text-zinc-700 border-zinc-200'
-                  }`}
-                >
-                  {skill.level}
-                </span>
-              </div>
-
-              <h3 className="text-base font-bold text-zinc-950 group-hover:text-[#FF4B1F] transition-colors">
-                {skill.name}
-              </h3>
-
-              <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-100 text-[11px] text-zinc-500">
-                <span>{skill.category}</span>
-                {skill.highlight && (
-                  <span className="flex items-center gap-1 text-[#FF4B1F] font-semibold">
-                    <Zap className="w-3 h-3 fill-current" />
-                    Key Skill
-                  </span>
-                )}
-              </div>
-            </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {categories.map((category, index) => (
+            <CategoryPanel key={category.id} category={category} index={index} />
           ))}
         </div>
-
-        {/* Bottom Callout banner */}
-        <div className="mt-12 rounded-2xl bg-white border border-zinc-200 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF4B1F] shrink-0">
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="text-base sm:text-lg font-bold text-zinc-950">
-                Always Expanding My Technical Horizon
-              </h4>
-              <p className="text-xs sm:text-sm text-zinc-600 mt-0.5">
-                Currently diving deeper into scalable data pipelines, predictive models, and cloud architectures.
-              </p>
-            </div>
-          </div>
-          <a
-            href="#projects"
-            className="shrink-0 px-5 py-2.5 rounded-full bg-zinc-950 hover:bg-[#FF4B1F] text-white text-xs sm:text-sm font-semibold transition-colors duration-200"
-          >
-            See Skills In Action
-          </a>
-        </div>
-
       </div>
     </section>
   );
-};
+}
